@@ -8,3 +8,5 @@ let changes = JSON.parse(output);
 ///lerna publish patch --registry http://localhost:4873/ --yes
 
 //npm unpublish --force --registry http://localhost:4873/ floating-bar@1.0.3
+//Remove local tag - git tag -d 12345
+//Remove remote tag - git push --delete origin tagName
