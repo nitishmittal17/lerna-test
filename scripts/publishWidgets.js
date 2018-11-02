@@ -33,7 +33,7 @@ for (let i = 0; i < changes.length; i++) {
 
 	let data = {};
 	data.newVersion = newWidgetDetails.version;
-	data.html = fs.readFileSync(newWidgetDetails.location + '/index.handlebars');
+	data.html = fs.readFileSync(newWidgetDetails.location + '/index.handlebars','utf8');
 	promiseArray.push(getRequestPromise('', 'POST', data))
 }
 
