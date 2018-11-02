@@ -1,3 +1,4 @@
+const fs = require('fs');
 const execSync = require('child_process').execSync;
 
 let output = execSync(`lerna changed --loglevel silent --json`);
@@ -14,6 +15,30 @@ console.log(changes);
 
 execSync(`lerna publish patch --registry http://localhost:4873/ --loglevel silent --yes`);
 
-output = execSync(`lerna changed --loglevel silent --json`);
-changes = JSON.parse(output);
-console.log(changes);
+output = execSync(`lerna list --loglevel silent --json`);
+let newList = JSON.parse(output);
+console.log(newList);
+
+const getRequestPromise = (url, type, params) => {
+	return new Promise(function(resolve, reject) {
+		//Make request to some api call to save the data
+		console.log(params);
+		resolve();
+	})
+};
+
+let promiseArray = [];
+for (let i = 0; i < changes.length; i++) {
+	let newWidgetDetails = newList.find(widget => widget.name === changes[i].name);
+
+	let data = {};
+	data.newVersion = newWidgetDetails.version;
+	data.html = fs.readFileSync(newWidgetDetails.location + '/index.handlebars');
+	promiseArray.push(getRequestPromise('', 'POST', data))
+}
+
+Promise.all(promiseArray).then(function() {
+	console.log('Success');
+}, function() {
+	console.log('Error')
+});
