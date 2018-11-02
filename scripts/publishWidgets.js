@@ -1,7 +1,7 @@
 const execSync = require('child_process').execSync;
 
 let output = execSync(`lerna changed --loglevel silent --json`);
-//let changes = JSON.parse(output);
+let changes = JSON.parse(output);
 
 //npm unpublish --force --registry https://npm.wingify.com @wingify/${packageName}
 //lerna publish --registry http://localhost:4873/
@@ -12,7 +12,7 @@ let output = execSync(`lerna changed --loglevel silent --json`);
 //Remove remote tag - git push --delete origin tagName
 
 try {
-	output = execSync(`lerna publish patch --registry http://localhost:48731/ --loglevel silent --yes`);
+	output = execSync(`lerna publish patch --registry http://localhost:4873/ --loglevel silent --yes`);
 } catch(e) {
 	console.log('Error');
 	console.log(e);
