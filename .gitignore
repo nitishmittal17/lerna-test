@@ -1,0 +1,13 @@
+node_modules/*
+
+### OSX ###
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+.idea
+
+*.csv
+lerna-debug.log
+.idea/*
