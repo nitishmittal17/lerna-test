@@ -13,6 +13,7 @@ let changes = JSON.parse(output);
 
 try {
 	output = execSync(`lerna publish patch --registry http://localhost:4873/ --loglevel silent --yes`);
+	console.log(output);
 } catch(e) {
 	console.log('Error');
 	console.log(e);
