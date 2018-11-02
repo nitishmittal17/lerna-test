@@ -12,4 +12,6 @@ let changes = JSON.parse(output);
 //Remove remote tag - git push --delete origin tagName
 
 output = execSync(`lerna publish patch --registry http://localhost:4873/ --loglevel silent --yes`);
+console.log('-----');
 console.log(output.toString());
+console.log('-------');
