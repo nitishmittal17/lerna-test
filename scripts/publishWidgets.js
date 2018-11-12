@@ -58,7 +58,7 @@ for (let i = 0; i < changes.length; i++) {
 	promiseArray.push(getRequestPromise('', 'POST', data))
 }
 
-Promise.all(promiseArray).then(function(ouput) {
+Promise.all(promiseArray).then(function(result) {
 	console.log('Success output');
-	console.log(output);
+	console.log(result);
 });
