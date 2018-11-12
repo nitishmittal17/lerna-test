@@ -4,7 +4,7 @@ const execSync = require('child_process').execSync;
 let output, changes;
 
 output = execSync('git status --porcelain');
-console.log(output);
+console.log(output.toString());
 
 try {
 	output = execSync(`lerna changed --loglevel silent --json`);
