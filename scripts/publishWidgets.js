@@ -33,6 +33,7 @@ let newList = JSON.parse(output);
 const getRequestPromise = (url, type, params) => {
 	return new Promise(function(resolve, reject) {
 		//Make request to some api call to save the data
+		//Set status to 'success' or 'failed' based on the api response
 		resolve({
 			status: 'failed',
 			params: params
@@ -57,12 +58,16 @@ Promise.all(promiseArray).then(function(result) {
 			console.log(`Package published successfully - ${row.params.name}@${row.params.newVersion}`)
 		} else {
 			console.log(`Error in publishing package - ${row.params.name}.. Reverting..`);
-			console.log('unpublishing from npm');
-			execSync(`npm unpublish --force --registry ${npmRegistry} ${row.params.name}@${row.params.newVersion}`);
-			console.log('Removing local tag');
-			execSync(`git tag -d ${row.params.name}@${row.params.newVersion}`);
-			console.log('Removing remote tag');
-			execSync(`git push --delete origin ${row.params.name}@${row.params.newVersion}`);
+
+			if (row.params.name && row.params.newVersion) {
+				console.log('unpublishing from npm');
+				execSync(`npm unpublish --force --registry ${npmRegistry} ${row.params.name}@${row.params.newVersion}`);
+				console.log('Removing local tag');
+				execSync(`git tag -d ${row.params.name}@${row.params.newVersion}`);
+				console.log('Removing remote tag');
+				execSync(`git push --delete origin ${row.params.name}@${row.params.newVersion}`);
+			}
+
 		}
 	})
 });
