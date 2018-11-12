@@ -59,10 +59,10 @@ Promise.all(promiseArray).then(function(result) {
 			console.log(`Error in publishing package - ${row.params.name}.. Reverting..`);
 			console.log('unpublishing from npm');
 			execSync(`npm unpublish --force --registry ${npmRegistry} ${row.params.name}@${row.params.newVersion}`);
-			//console.log('Removing local tag');
-			//execSync(`git tag -d ${row.params.name}@${row.params.newVersion}`);
-			//console.log('Removing remote tag');
-			//execSync(`git push --delete origin ${row.params.name}@${row.params.newVersion}`);
+			console.log('Removing local tag');
+			execSync(`git tag -d ${row.params.name}@${row.params.newVersion}`);
+			console.log('Removing remote tag');
+			execSync(`git push --delete origin ${row.params.name}@${row.params.newVersion}`);
 		}
 	})
 });
