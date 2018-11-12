@@ -26,9 +26,9 @@ try {
 //lerna publish --registry http://localhost:4873/
 ///lerna publish patch --registry http://localhost:4873/ --yes --loglevel silent --json
 
-//npm unpublish --force --registry http://localhost:4873/ floating-bar@1.0.3
-//Remove local tag - git tag -d 12345
-//Remove remote tag - git push --delete origin tagName
+//npm unpublish --force --registry http://localhost:4873/ floating-bar@1.0.18
+//Remove local tag - git tag -d floating-bar@1.0.18
+//Remove remote tag - git push --delete origin floating-bar@1.0.18
 
 console.log('Publishing the changes..');
 execSync(`lerna publish patch --registry http://localhost:4873/ --loglevel silent --yes`);
@@ -41,7 +41,10 @@ const getRequestPromise = (url, type, params) => {
 	return new Promise(function(resolve, reject) {
 		//Make request to some api call to save the data
 		console.log(params);
-		reject();
+		resolve({
+			status: 'success',
+			params: params
+		});
 	})
 };
 
@@ -55,8 +58,6 @@ for (let i = 0; i < changes.length; i++) {
 	promiseArray.push(getRequestPromise('', 'POST', data))
 }
 
-Promise.all(promiseArray).then(function() {
-	console.log(`Successfully published ${changes.length} package(s).`);
-}, function() {
-	console.log('Error in publishing. Reverting packages')
+Promise.all(promiseArray).then(function(ouput) {
+
 });
