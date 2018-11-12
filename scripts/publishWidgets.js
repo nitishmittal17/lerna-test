@@ -6,7 +6,9 @@ let output, changes;
 try {
 	output = execSync(`lerna changed --loglevel silent --json`);
 	changes = JSON.parse(output);
-	console.log(changes);
+	changes.forEach(change => {
+		console.log(`Changes found in package ${change.name}`);
+	})
 } catch(e) {
 	console.log('No changes found to publish.');
 	process.exit();
@@ -20,17 +22,18 @@ try {
 //Remove local tag - git tag -d 12345
 //Remove remote tag - git push --delete origin tagName
 
+console.log('Publishing the changes..');
 execSync(`lerna publish patch --registry http://localhost:4873/ --loglevel silent --yes`);
 
+console.log('Changes published. Saving to database..');
 output = execSync(`lerna list --loglevel silent --json`);
 let newList = JSON.parse(output);
-console.log(newList);
 
 const getRequestPromise = (url, type, params) => {
 	return new Promise(function(resolve, reject) {
 		//Make request to some api call to save the data
 		console.log(params);
-		resolve();
+		reject();
 	})
 };
 
@@ -45,7 +48,7 @@ for (let i = 0; i < changes.length; i++) {
 }
 
 Promise.all(promiseArray).then(function() {
-	console.log('Success');
+	console.log(`Successfully published ${changes.length} package(s).`);
 }, function() {
-	console.log('Error')
+	console.log('Error in publishing. Reverting packages')
 });
