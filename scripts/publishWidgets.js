@@ -1,9 +1,16 @@
 const fs = require('fs');
 const execSync = require('child_process').execSync;
 
-let output = execSync(`lerna changed --loglevel silent --json`);
-let changes = JSON.parse(output);
-console.log(changes);
+let output, changes;
+
+try {
+	output = execSync(`lerna changed --loglevel silent --json`);
+	changes = JSON.parse(output);
+	console.log(changes);
+} catch(e) {
+	console.log('No changes found to publish.');
+	process.exit();
+}
 
 //npm unpublish --force --registry https://npm.wingify.com @wingify/${packageName}
 //lerna publish --registry http://localhost:4873/
