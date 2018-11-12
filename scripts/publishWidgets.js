@@ -1,5 +1,6 @@
 const fs = require('fs');
 const execSync = require('child_process').execSync;
+const npmRegistry = 'http://localhost:4873/';
 
 let output, changes;
 
@@ -22,16 +23,8 @@ try {
 	process.exit();
 }
 
-//npm unpublish --force --registry https://npm.wingify.com @wingify/${packageName}
-//lerna publish --registry http://localhost:4873/
-///lerna publish patch --registry http://localhost:4873/ --yes --loglevel silent --json
-
-//npm unpublish --force --registry http://localhost:4873/ floating-bar@1.0.18
-//Remove local tag - git tag -d floating-bar@1.0.18
-//Remove remote tag - git push --delete origin floating-bar@1.0.18
-
 console.log('Publishing the changes..');
-execSync(`lerna publish patch --registry http://localhost:4873/ --loglevel silent --yes`);
+execSync(`lerna publish patch --registry ${npmRegistry} --loglevel silent --yes`);
 
 console.log('Changes published. Saving to database..');
 output = execSync(`lerna list --loglevel silent --json`);
@@ -64,9 +57,12 @@ Promise.all(promiseArray).then(function(result) {
 			console.log(`Package published successfully - ${row.params.name}@${row.params.newVersion}`)
 		} else {
 			console.log(`Error in publishing package - ${row.params.name}.. Reverting..`);
-			execSync(`npm unpublish --force --registry http://localhost:4873/ ${row.params.name}@${row.params.newVersion}`);
-			execSync(`git tag -d ${row.params.name}@${row.params.newVersion}`);
-			execSync(`git push --delete origin ${row.params.name}@${row.params.newVersion}`);
+			console.log('unpublishing from npm');
+			execSync(`npm unpublish --force --registry ${npmRegistry} ${row.params.name}@${row.params.newVersion}`);
+			//console.log('Removing local tag');
+			//execSync(`git tag -d ${row.params.name}@${row.params.newVersion}`);
+			//console.log('Removing remote tag');
+			//execSync(`git push --delete origin ${row.params.name}@${row.params.newVersion}`);
 		}
 	})
 });
