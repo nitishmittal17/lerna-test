@@ -3,10 +3,14 @@ const execSync = require('child_process').execSync;
 
 let output, changes;
 
+//Check if there are any unsaved changes. if found, abort the process
 output = execSync('git status --porcelain --null');
-console.log(output.toString() === '');
-console.log('13');
+if (output.toString() !== '') {
+	console.log('You have changes to commit. Please commit the changes before publishing.');
+	process.exit();
+}
 
+//Check if there is any change since last publish. If no change found, abort the process.
 try {
 	output = execSync(`lerna changed --loglevel silent --json`);
 	changes = JSON.parse(output);
