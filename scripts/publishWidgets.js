@@ -59,5 +59,6 @@ for (let i = 0; i < changes.length; i++) {
 }
 
 Promise.all(promiseArray).then(function(ouput) {
-
+	console.log('Success output');
+	console.log(output);
 });
