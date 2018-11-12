@@ -40,7 +40,6 @@ let newList = JSON.parse(output);
 const getRequestPromise = (url, type, params) => {
 	return new Promise(function(resolve, reject) {
 		//Make request to some api call to save the data
-		console.log(params);
 		resolve({
 			status: 'success',
 			params: params
@@ -53,12 +52,21 @@ for (let i = 0; i < changes.length; i++) {
 	let newWidgetDetails = newList.find(widget => widget.name === changes[i].name);
 
 	let data = {};
+	data.name = newWidgetDetails.name;
 	data.newVersion = newWidgetDetails.version;
 	data.html = fs.readFileSync(newWidgetDetails.location + '/index.handlebars','utf8');
 	promiseArray.push(getRequestPromise('', 'POST', data))
 }
 
 Promise.all(promiseArray).then(function(result) {
-	console.log('Success output');
-	console.log(result);
+	result.forEach(row => {
+		if (row.status === 'success') {
+			console.log(`Package published successfully - ${row.params.name}@${row.params.newVersion}`)
+		} else {
+			console.log(`Error in publishing package - ${row.params.name}.. Reverting..`);
+			execSync(`npm unpublish --force --registry http://localhost:4873/ ${row.params.name}@${row.params.newVersion}`);
+			execSync(`git tag -d ${row.params.name}@${row.params.newVersion}`);
+			execSync(`git push --delete origin ${row.params.name}@${row.params.newVersion}`);
+		}
+	})
 });
