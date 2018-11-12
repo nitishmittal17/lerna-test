@@ -5,6 +5,7 @@ let output, changes;
 
 output = execSync('git status --porcelain');
 console.log(output.toString());
+console.log('13');
 
 try {
 	output = execSync(`lerna changed --loglevel silent --json`);
