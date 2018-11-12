@@ -2,9 +2,13 @@
   "name": "root",
   "private": true,
   "scripts": {
+    "widget:create": "node ./scripts/createWidget.js",
     "widget:publish": "node ./scripts/publishWidgets.js"
   },
   "devDependencies": {
     "lerna": "^3.4.3"
+  },
+  "dependencies": {
+    "inquirer": "^6.2.0"
   }
 }

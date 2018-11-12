@@ -8,7 +8,7 @@ let output, changes;
 output = execSync('git status --porcelain --null');
 if (output.toString() !== '') {
 	console.log('You have changes to commit. Please commit the changes before publishing.');
-	process.exit();
+	process.exit(0);
 }
 
 //Check if there is any change since last publish. If no change found, abort the process.
@@ -20,7 +20,7 @@ try {
 	})
 } catch(e) {
 	console.log('No changes found to publish.');
-	process.exit();
+	process.exit(0);
 }
 
 console.log('Publishing the changes..');
