@@ -35,7 +35,7 @@ const getRequestPromise = (url, type, params) => {
 		//Make request to some api call to save the data
 		//Set status to 'success' or 'failed' based on the api response
 		resolve({
-			status: 'failed',
+			status: 'success',
 			params: params
 		});
 	})
