@@ -3,7 +3,7 @@ const execSync = require('child_process').execSync;
 
 let output, changes;
 
-output = execSync('git status --porcelain');
+output = execSync('git status --porcelain --null');
 console.log(output.toString());
 console.log('13');
 
