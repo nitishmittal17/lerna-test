@@ -66,6 +66,8 @@ let addWidget = (widgetName) => {
 	try {
 		execSync(`cp ${templateFolder}/package.json ${folderPath}`);
 		execSync(`cp ${templateFolder}/index.handlebars ${folderPath}`);
+		execSync(`cp ${templateFolder}/README.md ${folderPath}`);
+		execSync(`cp ${templateFolder}/styles.scss ${folderPath}`);
 	} catch (e) {
 		console.log('Files could not be copied. Ensure your current directory and the file with same name should not exist.');
 		process.exit(0);
@@ -75,6 +77,15 @@ let addWidget = (widgetName) => {
 	let fileList = [
 		{
 			file: `${folderPath}/package.json`,
+			replace: [
+				{
+					to: widgetNamePlaceholder,
+					with: widgetName
+				}
+			]
+		},
+		{
+			file: `${folderPath}/README.md`,
 			replace: [
 				{
 					to: widgetNamePlaceholder,
