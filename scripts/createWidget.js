@@ -68,6 +68,10 @@ let addWidget = (widgetName) => {
 		execSync(`cp ${templateFolder}/index.handlebars ${folderPath}`);
 		execSync(`cp ${templateFolder}/README.md ${folderPath}`);
 		execSync(`cp ${templateFolder}/styles.scss ${folderPath}`);
+
+		//execSync(`mkdir ${folderPath}/build`);
+		//execSync(`ln -sf build/webpack.config.js ${folderPath}/build/webpack.config.js`);
+		//execSync(`ln -sf build/app.js ${folderPath}/build/app.js`);
 	} catch (e) {
 		console.log('Files could not be copied. Ensure your current directory and the file with same name should not exist.');
 		process.exit(0);

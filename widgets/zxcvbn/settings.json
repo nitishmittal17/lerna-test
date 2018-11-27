@@ -1,0 +1,50 @@
+{
+  "layout": [
+    {
+      "id": 1,
+      "title": "Top positioned, without timer",
+      "imageUrl": "...",
+      "dataKey": {
+        "topPosition": true,
+        "timer": false
+      }
+    }
+  ],
+  "content": [
+    {
+      "id": 1,
+      "label": "Content",
+      "type": "textarea",
+      "applicableLayouts": [1],
+      "defaultValue": "Default Content block. Change this value",
+      "layoutDefaultValues": {
+        "1": "Layout 1 default value"
+      },
+      "validation": {
+        "rule": "required"
+      },
+      "dataKey": "stickyBarContent"
+    }
+  ],
+  "style": [
+    {
+      "id": 1,
+      "contentId": 1,
+      "label": "Background Color",
+      "styleKey": "background",
+      "dataKey": "background",
+      "applicableLayouts": [1],
+      "defaultValue": "#ccc",
+      "layoutDefaultValues": {
+        "1": "#eee"
+      }
+    }
+  ],
+  "triggers": {
+
+  },
+  "functionality": {
+
+
+  }
+}
